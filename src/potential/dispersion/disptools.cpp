@@ -736,7 +736,7 @@ bool GetC6(std::string mon_id1, std::string mon_id2, size_t index1, size_t index
         d6.push_back(3.68542);  // A^(-1)
         d6.push_back(3.79757);  // A^(-1)
         d6.push_back(4.01558);  // A^(-1)
-    } else if (mon_id1 == "co2" && mon_id2 == "h2o") {
+    } else if (mon_id1 == "co2cm5" && mon_id2 == "h2o") {
         // Define the type of atom in each mon
         types1.push_back(0);
         types1.push_back(1);
