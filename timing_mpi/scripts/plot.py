@@ -9,6 +9,7 @@ import sys,os
 import copy
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 from matplotlib.ticker import MultipleLocator
 from matplotlib import rcParams
 import pandas as pd
@@ -101,9 +102,6 @@ for f in folders:
   for i in range(len(contrib)):
     bottom = top 
     top = bottom + contrib[i] 
-    print(legend_contrib[i])
-    print(bottom)
-    print(top)
     axs.bar3d(nomppos,nmpipos,bottom,width,width,contrib[i],shade=False,color = colors[i], edgecolor='black')
     # for legend
     leg.append(plt.Rectangle((0, 0), 1, 1, fc=colors[i]))
@@ -132,6 +130,42 @@ for f in folders:
   plt.savefig(figName, format='pdf', dpi=1000)
   
   os.system("cp " + name +".png $HOME")
+
+
+  # Now plot #2. 
+  fig, axs = plt.subplots(1, 1, figsize=(7,6))
+  plt.grid(color='gray',linestyle='--')
+  axs.set_axisbelow(True)
+  cmap = plt.get_cmap('viridis')
+  axs.scatter(nomppos,nmpipos,marker='o',color='gray',s=(nomp*nmpi)*200)
+  sp = axs.scatter(nomppos,nmpipos,marker='o',c=(max(tot)/tot) / (nomp*nmpi),s=(max(tot)/tot)*200) 
+  plt.colorbar(sp,fraction=0.046, pad=0.04)
+  axs.set_xticks(nomppos)
+  axs.set_xticklabels(nomp)
+  axs.set_yticks(nmpipos)
+  axs.set_yticklabels(nmpi)
+
+  axs.set_xlabel('Number of OpenMP threads', fontsize=16)
+  axs.set_ylabel('Number of MPI ranks', fontsize=16)
+
+  axs.set_xlim([0.5,max(max(nomppos),max(nmpipos)) + 0.5])
+  axs.set_ylim([0.5,max(max(nomppos),max(nmpipos)) + 0.5])
+
+
+  #Tight layout
+  plt.tight_layout()
+
+  #Save images
+  name = 'total_scaling_' + f
+
+  figName = name +'.png'
+  plt.savefig(figName, format='png', dpi=1000)
+  figName = name +'.pdf'
+  plt.savefig(figName, format='pdf', dpi=1000)
+
+  os.system("cp " + name +".png $HOME")
+
+  
   
 
 #### Figure
