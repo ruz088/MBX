@@ -51,7 +51,7 @@ folders = ["256_h2o_cubic_box"]
 
 legend_contrib = ["One-body Polynomials","Two-body Polynomials","Three-body Polynomials","Electrostatics","Dispersion","Buckingham","Force field","Lennard-Jones"]
 
-colors = ['greenyellow','lime','darkgreen','brown','orange','royalblue','deeppink','darkviolet']
+colors = ['tan','lime','darkgreen','brown','orange','royalblue','deeppink','darkviolet']
 
 #Input files
 dataFile = sys.argv[1]

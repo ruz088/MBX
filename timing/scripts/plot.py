@@ -24,7 +24,7 @@ folders = ["2048_h2o_droplet","256_h2o_cubic_box","2048_h2o_cubic_box","57_ch4_5
 
 legend_contrib = ["One-body Polynomials","Two-body Polynomials","Three-body Polynomials","Electrostatics","Dispersion","Buckingham","Force field","Lennard-Jones"]
 
-colors = ['greenyellow','lime','darkgreen','brown','orange','royalblue','deeppink','darkviolet']
+colors = ['tan','lime','darkgreen','brown','orange','royalblue','deeppink','darkviolet']
 
 #Input files
 dataFile = "np_times.dat"
@@ -112,7 +112,7 @@ for i in range(len(folders)):
   axs.tick_params(top='on', bottom='on', left='on', right='on', direction='in', labelsize=15, length=6)
   axs.tick_params(which='minor', top='on', bottom='on', left='on', right='on', direction='in', labelsize=15, length=4)
   #
-  axs.set_xlabel('Number of Cores', fontsize=16)
+  axs.set_xlabel('Number of OpenMP Threads', fontsize=16)
   axs.set_ylabel('Time (ms)', fontsize=16)
 
 
@@ -149,8 +149,8 @@ for i in range(len(folders)):
 
   axs.tick_params(top='on', bottom='on', left='on', right='on', direction='in', labelsize=15, length=6)
   axs.tick_params(which='minor', top='on', bottom='on', left='on', right='on', direction='in', labelsize=15, length=4)
-  axs.set_xlabel('Number of Cores', fontsize=16)
-  axs.set_ylabel('Time (ms)', fontsize=16)
+  axs.set_xlabel('Number of OpenMP Threads', fontsize=16)
+  axs.set_ylabel('Speedup', fontsize=16)
 
   axs.set_xlim([0.5,max(nprocs) + 0.5])
   axs.set_ylim([0.5,max(nprocs) + 0.5])
