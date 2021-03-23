@@ -191,6 +191,18 @@ class System {
     void GetAtomMonIndex(std::vector<size_t> &original_atom_index_to_original_mon_index,
                          std::vector<std::string> &original_atom_index_to_original_mon_id);
 
+
+    /**
+     * @brief Fills out the monomer indexes and ids for each atom
+     *
+     * @param[out] original_site_index_to_original_mon_index Contains, for atom i, the index of the monomer to which it
+     * belongs
+     * @param[out] original_site_index_to_original_mon_id Contains, for atom i, the id of the monomer to which it
+     * belongs
+     */
+    void GetSiteMonIndex(std::vector<size_t> &original_site_index_to_original_mon_index,
+                         std::vector<std::string> &original_site_index_to_original_mon_id);
+
     /**
      * Gets the position of the first site of monomer n in the atoms vector
      * @param[in] n Index of the monomer in the monomer list
@@ -894,6 +906,37 @@ class System {
      */
     double Energy(bool do_grads);
 
+    double QMMM_setup(bool do_grads);
+
+    std::string get_qmmm();
+    
+    std::string get_qm_code();
+    
+    std::string get_qm_code_path();
+    
+    std::string get_qm_theory();
+
+    std::string get_qm_mem();
+
+    int get_qm_threads();
+
+    int get_qm_charge();
+ 
+    void set_qm_charge(std::vector<int> mod_indices, std::vector<std::vector<double>> mod_charges);
+
+    int get_qm_spin();   
+ 
+    std::string get_qm_basis();
+    
+    std::vector<int> get_qm_indeces();
+    
+    std::vector<std::string> get_qm_auxparams();
+
+    std::vector<std::vector<double>> get_qm_modcharges();
+
+
+
+
     /**
      * Obtains the one-body energy. This is the sum of all the monomer
      * deformation energies.
@@ -949,6 +992,9 @@ class System {
     double Electrostatics(bool do_grads, bool use_ghost = 0);
     double ElectrostaticsMPI(bool do_grads, bool use_ghost = 0);
     double ElectrostaticsMPIlocal(bool do_grads, bool use_ghost = 0);
+    double PermanentElectrostatics(bool do_grads, bool use_ghost = 0);
+    double CustomInducedElectrostatics(std::vector<int> mod_indices, std::vector<std::vector<double>> mod_charges,bool do_grads, bool use_ghost =0);
+    double CustomPermanentElectrostatics(std::vector<int> mod_indices, std::vector<std::vector<double>> mod_charges,bool do_grads, bool use_ghost =0);
 
     /**
      * Obtains the dispersion energy for the whole system.
@@ -1033,6 +1079,13 @@ class System {
     void SetCharges();
 
     /**
+     * Sets custom charges, including the
+     * position dependent charges
+     */
+
+    void SetCustomCharges(std::vector<int> mod_indices, std::vector<std::vector<double>> mod_charges);
+    void SetZeroPols(std::vector<int> mod_indices);
+    /**
      * Sets the polarizabilities of the system
      */
     void SetPols();
@@ -1109,6 +1162,7 @@ class System {
      */
     double GetElectrostatics(bool do_grads, bool use_ghost = 0);
     double GetElectrostaticsMPIlocal(bool do_grads, bool use_ghost = 0);
+    double GetElectrostatics_QMMM(bool do_grads, bool use_ghost = 0);
 
     /**
      * Private function to internally get the lennard-jones energy.
@@ -1329,6 +1383,26 @@ class System {
      * Method used in order to calculate the induced dipoles
      */
     std::string dipole_method_;
+
+    /**
+     * Performing a QM/MM calculation? (yes or no)
+     */
+    std::string qmmm_;
+
+    std::string qm_theory_;
+    std::string qm_basis_;
+    std::string qm_mem_;
+    int qm_threads_;
+    int qm_charge_;
+    int qm_spin_;
+   
+    std::string qm_code_;
+    std::string qm_code_path_;
+    std::vector<int> qm_index_;
+
+    std::vector<std::string> qm_auxparams_;
+
+    std::vector<std::vector<double>> qm_modcharges_;
 
     /**
      * Vector that contains, in the internal order of the system, the

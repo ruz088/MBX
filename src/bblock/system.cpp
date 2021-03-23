@@ -241,15 +241,40 @@ std::vector<size_t> System::GetPairList(size_t nmax, double cutoff, size_t istar
 void System::GetAtomMonIndex(std::vector<size_t> &original_atom_index_to_original_mon_index,
                              std::vector<std::string> &original_atom_index_to_original_mon_id) {
     original_atom_index_to_original_mon_index = std::vector<size_t>(numat_, 0);
-    original_atom_index_to_original_mon_id = std::vector<std::string>(numat_, 0);
+    original_atom_index_to_original_mon_id = std::vector<std::string>(numat_, "potato");
     for (size_t i = 0; i < nat_.size(); i++) {
-        size_t original_index = initial_order_realSites_[i].first;
+        size_t original_index = initial_order_realSites_[i].second;
+        //std::cout << "nat_[" << i << "] = " << nat_[i] << std::endl;
+        //std::cout << "original Index first" << initial_order_realSites_[i].first << std::endl;
+        //std::cout << "original Index second " << initial_order_realSites_[i].second << std::endl;
         for (size_t j = 0; j < nat_[i]; j++) {
+           // std::cout << " i " << i << std::endl;
+           // std::cout << "original_index + j " << original_index + j<< std::endl; 
             original_atom_index_to_original_mon_index[original_index + j] = i;
             original_atom_index_to_original_mon_id[original_index + j] = monomers_[i];
         }
     }
+
+    //for (size_t i = 0; i < original_atom_index_to_original_mon_index.size(); i++) {
+    //    std::cout << "original_atom_index_to_original_mon_index " << original_atom_index_to_original_mon_index[i] << std::endl;
+    //} 
 }
+
+
+void System::GetSiteMonIndex(std::vector<size_t> &original_site_index_to_original_mon_index,
+                             std::vector<std::string> &original_site_index_to_original_mon_id) {
+    original_site_index_to_original_mon_index = std::vector<size_t>(numsites_, 0);
+    original_site_index_to_original_mon_id = std::vector<std::string>(numsites_, "0");
+    for (size_t i = 0; i < sites_.size(); i++) {
+        size_t original_index = initial_order_[i].second;
+        for (size_t j = 0; j < sites_[i]; j++) {
+            original_site_index_to_original_mon_index[original_index + j] = i;
+            original_site_index_to_original_mon_id[original_index + j] = monomers_[i];
+        }
+    }
+}
+
+
 
 std::vector<size_t> System::GetMolecule(size_t n) { return molecules_[n]; }
 
@@ -1073,6 +1098,133 @@ void System::SetUpFromJson(nlohmann::json j) {
     }
     mbx_j_["MBX"]["dipole_method"] = dipole_method_;
 
+    // QM/MM section
+    std::string qmmm;
+    try {
+        qmmm = j["MBX"]["qmmm"];
+    } catch (...) {
+        qmmm = "no";
+        std::cerr << "**WARNING** \"qmmm\" is not defined in json file. Using " << qmmm << "\n";
+    }
+    qmmm_ = qmmm;
+    mbx_j_["MBX"]["qmmm"] = qmmm;
+
+    std::string qm_theory;
+    std::string qm_basis;
+    int qm_charge;
+    int qm_spin;
+    std::string qm_code;
+    std::string qm_code_path;
+    int qm_threads;
+    std::string qm_mem;
+    if (qmmm_=="yes") {
+        try {
+            qm_theory = j["MBX"]["qm_theory"];
+        } catch (...) {
+            qm_theory = "";
+            std::cerr << "**WARNING** \"qm_theory\" is not defined in json file. \n";
+        }
+        qm_theory_ = qm_theory;
+        mbx_j_["MBX"]["qm_theory"] = qm_theory;
+
+        try {
+            qm_basis = j["MBX"]["qm_basis"];
+        } catch (...) {
+            qm_basis = "";
+            std::cerr << "**WARNING** \"qm_basis\" is not defined in json file. \n";
+        }
+        qm_basis_ = qm_basis;
+        mbx_j_["MBX"]["qm_basis"] = qm_basis;
+
+        try {
+            qm_charge = j["MBX"]["qm_charge"];
+        } catch (...) {
+            qm_charge = 0;
+            std::cerr << "**WARNING** \"qm_charge\" is not defined in json file. setting charge = 0 \n";
+        }
+        qm_charge_ = qm_charge;
+        mbx_j_["MBX"]["qm_charge"] = qm_charge;
+
+
+        try {
+            qm_spin = j["MBX"]["qm_spin"];
+        } catch (...) {
+            qm_spin = 1;
+            std::cerr << "**WARNING** \"qm_spin\" is not defined in json file. setting to 1 \n";
+        }
+        qm_spin_ = qm_spin;
+        mbx_j_["MBX"]["qm_spin"] = qm_spin;
+
+
+       try {
+            qm_code = j["MBX"]["qm_code"];
+        } catch (...) {
+            qm_code = "";
+            std::cerr << "**WARNING** \"qm_code\" is not defined in json file. \n";
+        }
+        qm_code_ = qm_code;
+        mbx_j_["MBX"]["qm_code"] = qm_code;
+
+       try {
+            qm_code_path = j["MBX"]["qm_code_path"];
+        } catch (...) {
+            qm_code_path = "";
+            std::cerr << "**WARNING** \"qm_code_path\" is not defined in json file. \n";
+        }
+        qm_code_path_ = qm_code_path;
+        mbx_j_["MBX"]["qm_code_path"] = qm_code_path;
+
+        try {
+            qm_mem = j["MBX"]["qm_mem"];
+        } catch (...) {
+            qm_mem = "";
+            std::cerr << "**WARNING** \"qm_mem\" is not defined in json file. \n";
+        }
+        qm_mem_ = qm_mem;
+
+        try {
+            qm_threads = j["MBX"]["qm_threads"];
+        } catch (...) {
+            qm_threads = 1;
+            std::cerr << "**WARNING** \"qm_threads\" is not defined in json file. defaulting to 1 \n";
+        }
+        qm_threads_ = qm_threads;
+
+
+
+        std::vector<int> qm_index;
+        try {
+            std::vector<int> qm_index2 = j["MBX"]["qm_index"];
+            qm_index = qm_index2;
+        } catch (...) {
+            qm_index.clear();
+            std::cerr << "**WARNING** \"qm_index\" is not defined in json file. No QM atoms.\n";
+        }
+        qm_index_=qm_index;
+
+        std::vector<std::string> qm_auxparams;
+        try {
+            std::vector<std::string> qm_auxparams2 = j["MBX"]["qm_auxparams"];
+            qm_auxparams = qm_auxparams2;
+        } catch (...) {
+            qm_auxparams.clear();
+            std::cerr << "**WARNING** \"qm_auxparams\" is not defined in json file. No auxillary QM parameters.\n";
+        }
+        qm_auxparams_=qm_auxparams;
+
+        std::vector<std::vector<double>> qm_modcharges;
+        try {
+            std::vector<std::vector<double>> qm_modcharges2 = j["MBX"]["qm_modcharges"];
+            qm_modcharges = qm_modcharges2;
+        } catch (...) {
+            qm_modcharges.clear();
+            std::cerr << "**WARNING** \"qm_modcharges\" is not defined in json file. No auxillary QM modified charges.\n";
+            
+        }
+        qm_modcharges_=qm_modcharges;
+
+    }
+
     // Try to get dipole max number of iterations
     // Default: 100
     try {
@@ -1360,41 +1512,37 @@ void System::SetUpFromJson(char *json_file) {
 }
      */
 
-    // nlohmann::json j_default = {{"Note", "This is a cofiguration file"},
-    //                            {"MBX",
-    //                             {{"box", nlohmann::json::array()},
-    //                              {"twobody_cutoff", 100.0},
-    //                              {"threebody_cutoff", 6.5},
-    //                              {"max_n_eval_1b", 500},
-    //                              {"max_n_eval_2b", 500},
-    //                              {"max_n_eval_3b", 500},
-    //                              {"dipole_tolerance", 1E-16},
-    //                              {"dipole_max_it", 100},
-    //                              {"dipole_method", "cg"},
-    //                              {"alpha_ewald_elec", 0.0},
-    //                              {"grid_density_elec", 2.5},
-    //                              {"grid_fftdim_elec", nlohmann::json::array()},
-    //                              {"spline_order_elec", 6},
-    //                              {"alpha_ewald_disp", 0.0},
-    //                              {"grid_density_disp", 2.5},
-    //                              {"grid_fftdim_disp", nlohmann::json::array()},
-    //                              {"spline_order_disp", 6},
-    //                              {"ttm_pairs", nlohmann::json::array()},
-    //                              {"ignore_dispersion", nlohmann::json::array()},
-    //                              {"use_lennard_jones", nlohmann::json::array()},
-    //                              {"alpha_ewald_lj", 0.0},
-    //                              {"grid_density_lj", 2.5},
-    //                              {"spline_order_lj", 6},
-    //                              {"ff_mons", nlohmann::json::array()},
-    //                              {"connectivity_file", ""},
-    //                              {"nonbonded_file", ""},
-    //                              {"monomers_file", ""},
-    //                              {"ignore_1b_poly", nlohmann::json::array()},
-    //                              {"ignore_2b_poly", nlohmann::json::array()},
-    //                              {"ignore_3b_poly", nlohmann::json::array()}}},
-    //                            {"i-pi", {{"port", 34543}, {"localhost", "localhost"}}}};
-
-    nlohmann::json j_default = {};
+    nlohmann::json j_default = {{"Note", "This is a cofiguration file"},
+                                {"MBX",
+                                 {{"box", nlohmann::json::array()},
+                                  {"twobody_cutoff", 100.0},
+                                  {"threebody_cutoff", 6.5},
+                                  {"max_n_eval_1b", 500},
+                                  {"max_n_eval_2b", 500},
+                                  {"max_n_eval_3b", 500},
+                                  {"dipole_tolerance", 1E-16},
+                                  {"dipole_max_it", 100},
+                                  {"dipole_method", "cg"},
+                                  {"alpha_ewald_elec", 0.0},
+                                  {"grid_density_elec", 2.5},
+                                  {"spline_order_elec", 6},
+                                  {"alpha_ewald_disp", 0.0},
+                                  {"grid_density_disp", 2.5},
+                                  {"spline_order_disp", 6},
+                                  {"ttm_pairs", nlohmann::json::array()},
+                                  {"ff_mons", nlohmann::json::array()},
+                                  {"connectivity_file", ""},
+                                  {"ignore_1b_poly", nlohmann::json::array()},
+                                  {"ignore_2b_poly", nlohmann::json::array()},
+                                  {"ignore_3b_poly", nlohmann::json::array()}}},
+                                  {"qmmm","no"},
+    			  {"qm_theory",""},
+                                  {"qm_basis",""},
+                                  {"qm_code",""},
+                                  {"qm_charge",""},
+                                  {"qm_spin",""},
+                                {"i-pi", {{"port", 34543}, {"localhost", "localhost"}}}};
+   // nlohmann::json j_default = {};
 
     std::ifstream ifjson;
     nlohmann::json j;
@@ -1712,6 +1860,90 @@ std::vector<size_t> System::AddClustersParallel(size_t nmax, double cutoff, size
 
 void System::SetConnectivity(std::unordered_map<std::string, eff::Conn> connectivity_map) {
     connectivity_map_ = connectivity_map;
+}
+
+double System::QMMM_setup(bool do_grads) {
+    // Check if system has been initialized
+    // If not, throw exception
+    if (!initialized_) {
+        std::string text =
+            std::string("System has not been initialized. ") + std::string("Energy calculation not possible.");
+        throw CUException(__func__, __FILE__, __LINE__, text);
+    }
+    std::cout << "qmmm? " << qmmm_ << std::endl;
+    std::cout << "qm code " << qm_code_ << std::endl;
+    std::cout << "qm code path " << qm_code_path_ << std::endl;
+    std::cout << "qm theory " << qm_theory_ << std::endl; 
+    std::cout << "qm basis " << qm_basis_ << std::endl;
+    std::cout << "qm indeces: " << std::endl;
+    for (int i=0; i<qm_index_.size(); i++) {
+
+	std::cout << qm_index_[i] << std::endl;
+    }
+
+    std::cout << "qm auxillary parameters: " << std::endl;
+    for (int i=0; i<qm_auxparams_.size(); i++) {
+
+        std::cout << qm_auxparams_[i] << std::endl;
+    }
+
+
+    return 0.0;
+}
+
+std::string System::get_qmmm() {
+    return qmmm_;
+}
+
+std::string System::get_qm_code() {
+    return qm_code_;
+}
+
+std::string System::get_qm_code_path() {
+    return qm_code_path_;
+}
+
+std::string System::get_qm_theory() {
+    return qm_theory_;
+}
+
+int System::get_qm_charge() {
+    return qm_charge_;
+}
+ 
+void System::set_qm_charge(std::vector<int> mod_indices, std::vector<std::vector<double>> mod_charges) {
+    //std::cout << mod_indices[0] <<std::endl;
+    //std::cout << mod_charges[0][0] <<std::endl;
+    //std::cout << "turnip" << std::endl;
+    System::SetCustomCharges(mod_indices, mod_charges); // set custom charges // EL
+}
+
+int System::get_qm_spin() {
+    return qm_spin_;
+}
+
+std::string System::get_qm_basis() {
+    return qm_basis_;
+}
+
+std::string System::get_qm_mem() {
+    return qm_mem_;
+}
+
+int System::get_qm_threads() {
+    return qm_threads_;
+}
+
+std::vector<int> System::get_qm_indeces() {
+    return qm_index_;
+}
+
+std::vector<std::string> System::get_qm_auxparams() {
+    return qm_auxparams_;
+}
+
+std::vector<std::vector<double>> System::get_qm_modcharges() {
+    return qm_modcharges_;
 }
 
 double System::Energy(bool do_grads) {
@@ -2628,6 +2860,213 @@ void System::SetCharges() {
 #endif  // DEBUG
 }
 
+void System::SetCustomCharges(std::vector<int> mod_indices, std::vector<std::vector<double>> mod_charges) { // set custom charges // EL
+
+    double gammaM = 0.426706882;
+
+    double gamma1 = 1.0 - gammaM;
+
+    double gamma2 = gammaM / 2;
+
+    double gamma21 = gamma2 / gamma1;
+
+    double CHARGECON = 1.0;
+
+    std::vector<int> sys_order_template;
+    for (size_t i = 0; i < numsites_; i++) {
+        sys_order_template.push_back(i);
+    }
+    std::vector<int> input_order_template(numsites_,0);
+    //for (size_t i = 0; i < numsites_; i++) {
+    //    input_order_template.push_back(i);
+    //}
+    // get system order indeces in the input order...
+    input_order_template= systools::ResetOrderN(sys_order_template, initial_order_, first_index_, sites_);
+    std::vector<size_t> monomer_virt_index(numsites_, 0);
+    std::vector<std::string> monomer_virt_id(numsites_, "0");
+    std::vector<size_t> monomer_index(numat_, 0);
+    std::vector<std::string> monomer_id(numat_, "0");
+    GetAtomMonIndex(monomer_index,monomer_id);
+    GetSiteMonIndex(monomer_virt_index,monomer_virt_id);
+    std::vector<double> chargearray(numsites_,0.0); // charges in input order
+    chargearray= systools::ResetOrderN(chg_, initial_order_, first_index_, sites_);
+    
+    int k,j,q,p;
+    p=0;
+    
+
+    std::vector<int> realordermonindex(numsites_, 0);
+
+    for (size_t i =0; i < realordermonindex.size(); i++) {
+        
+        if (i>0 and monomer_virt_index[i] != monomer_virt_index[i-1]) {
+           
+           realordermonindex[i] = realordermonindex[i-1]+1;
+ 
+        } else if (i >0 and monomer_virt_index[i] == monomer_virt_index[i-1]) {
+          realordermonindex[i] = realordermonindex[i-1];
+	} else {
+          ;
+        }
+
+    }
+
+
+    for (size_t i = 0; i < numsites_; i++) {
+ 
+        k=realordermonindex[i];
+        q=0; // if q is more than 1 site i is a site with a modified charge
+
+        for (size_t l=0; l < mod_indices.size(); l++) {
+            if (k == (mod_indices[l]-1)) {
+                q += 1;
+                j=l;
+            }
+        }
+        
+        if (realordermonindex[i] != realordermonindex[i-1]) {
+            p=0; // if cuurent monomer id is different from old monomer id
+        }        // reset the p index
+        
+        if (q > 0) {
+
+            if ( monomer_virt_id[i] == "h2o") {
+                if (p==0) {
+                    chargearray[i] = 0.0;
+                    p+=1;
+                } else if ( p == 1 ) {
+                    chargearray[i] = CHARGECON * (mod_charges[j][1] + gamma21 * (mod_charges[j][1] + mod_charges[j][2]));
+                    p+=1;
+                } else if ( p == 2 ) {
+                    chargearray[i] = CHARGECON * (mod_charges[j][1] + gamma21 * (mod_charges[j][1] + mod_charges[j][2]));
+                    p+=1;
+                } else if ( p == 3 ) {
+                    chargearray[i] = CHARGECON * mod_charges[j][0]/ (1.0 - gammaM);
+                    p+=1;
+
+                }
+
+            } else {
+
+                chargearray[i] = mod_charges[j][p];
+                p+=1; // count the index within the charge list of lists
+                  // once monomer index is changed, p resets to 0
+            }
+        }
+    }
+
+
+    for (size_t i = 0; i < numsites_; i++) {
+        chg_[input_order_template[i]] = chargearray[i];
+    }
+
+//    for (size_t i = 0; i < numsites_; i++) {
+//        std::cout << "final "<< chg_[i] << std::endl;
+//  }
+
+}
+
+void System::SetZeroPols(std::vector<int> mod_indices) { // set custom charges // EL
+
+    double gammaM = 0.426706882;
+
+    double gamma1 = 1.0 - gammaM;
+
+    double gamma2 = gammaM / 2;
+
+    double gamma21 = gamma2 / gamma1;
+
+    double CHARGECON = 1.0;
+
+    std::vector<int> sys_order_template;
+    for (size_t i = 0; i < numsites_; i++) {
+        sys_order_template.push_back(i);
+    }
+    std::vector<int> input_order_template(numsites_,0);
+    //for (size_t i = 0; i < numsites_; i++) {
+    //    input_order_template.push_back(i);
+    //}
+    // get system order indeces in the input order...
+    input_order_template= systools::ResetOrderN(sys_order_template, initial_order_, first_index_, sites_);
+    std::vector<size_t> monomer_virt_index(numsites_, 0);
+    std::vector<std::string> monomer_virt_id(numsites_, "0");
+    std::vector<size_t> monomer_index(numat_, 0);
+    std::vector<std::string> monomer_id(numat_, "0");
+    GetAtomMonIndex(monomer_index,monomer_id);
+    GetSiteMonIndex(monomer_virt_index,monomer_virt_id);
+    std::vector<double> polarray(numsites_,0.0); // charges in input order
+    std::vector<double> polfacarray(numsites_,0.0); // charges in input order
+    polarray= systools::ResetOrderN(pol_, initial_order_, first_index_, sites_);
+    polfacarray= systools::ResetOrderN(polfac_, initial_order_, first_index_, sites_);
+    int k,j,q,p;
+    p=0;
+
+
+    std::vector<int> realordermonindex(numsites_, 0);
+    for (size_t i =0; i < realordermonindex.size(); i++) {
+
+        if (i>0 and monomer_virt_index[i] != monomer_virt_index[i-1]) {
+
+           realordermonindex[i] = realordermonindex[i-1]+1;
+ 
+        } else if (i >0 and monomer_virt_index[i] == monomer_virt_index[i-1]) {
+          realordermonindex[i] = realordermonindex[i-1];
+        } else {
+          ;
+        }
+
+    }
+//    for (size_t i = 0; i < pol_.size(); i++) {
+//        std::cout << "intial pol "<< pol_[i] << std::endl;
+//    }
+
+
+    for (size_t i = 0; i < numsites_; i++) {
+ 
+        k=realordermonindex[i];
+        q=0; // if q is more than 1 site i is a site with a modified charge
+
+        for (size_t l=0; l < mod_indices.size(); l++) {
+            if (k == (mod_indices[l]-1)) {
+                q += 1;
+                j=l;
+            }
+        }
+
+        if (realordermonindex[i] != realordermonindex[i-1]) {
+            p=0; // if cuurent monomer id is different from old monomer id
+        }        // reset the p index
+
+        if (q > 0) {
+
+                polarray[i] = 0.0000000000000000000001;
+                polfacarray[i] = 0.0;
+                p+=1; // count the index within the charge list of lists
+                  // once monomer index is changed, p resets to 0
+        }
+    }
+
+
+    for (size_t i = 0; i < numsites_; i++) {
+        pol_[input_order_template[i]] = polarray[i];
+    }
+    for (size_t i = 0; i < numsites_; i++) {
+        polfac_[input_order_template[i]] = polfacarray[i];
+    }
+
+
+    std::cout << " PRINTING POLS " << std::endl;
+    for (size_t i = 0; i < numsites_; i++) {
+        std::cout << "final pol "<< pol_[i] << std::endl;
+    }
+    for (size_t i = 0; i < numsites_; i++) {
+        std::cout << "final polfac "<< polfac_[i] << std::endl;
+    }
+
+
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void System::SetPols() {
@@ -2769,6 +3208,7 @@ void System::SetVSites() {
 #endif  // DEBUG
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
 
 double System::Dispersion(bool do_grads, bool use_ghost) {
@@ -2899,6 +3339,83 @@ double System::Electrostatics(bool do_grads, bool use_ghost) {
     energy_ = GetElectrostatics(do_grads, use_ghost);
 
     return energy_;
+}
+
+double System::CustomInducedElectrostatics(std::vector<int> mod_indices, std::vector<std::vector<double>> mod_charges,bool do_grads, bool use_ghost) {
+    // Check if system has been initialized
+    // If not, throw exception
+    if (!initialized_) { 
+        std::string text = std::string("System has not been initialized. ") + 
+                           std::string("Electrostatic Energy calculation ") + std::string("not possible.");
+        throw CUException(__func__, __FILE__, __LINE__, text);
+    }
+
+    energy_ = 0.0;
+    std::fill(grad_.begin(), grad_.end(), 0.0);
+    std::fill(virial_.begin(), virial_.end(), 0.0);
+
+    SetPBC(box_);
+    System::SetCustomCharges(mod_indices, mod_charges);
+    System::SetZeroPols(mod_indices);
+    energy_ = GetElectrostatics_QMMM(do_grads, use_ghost);
+    double pol_energy_ = electrostaticE_.GetInducedElectrostaticEnergy();
+
+    std::vector<double> dipvec = electrostaticE_.GetInducedDipoles();
+    std::cout << " INDUCED DIPOLES " << std::endl;
+    for (size_t i=0; i< dipvec.size(); i++) {
+        std::cout << dipvec[i] << std::endl;
+    }
+    std::cout << " END INDUCED DIPOLES " << std::endl;
+    return pol_energy_;
+}
+
+double System::CustomPermanentElectrostatics(std::vector<int> mod_indices, std::vector<std::vector<double>> mod_charges,bool do_grads, bool use_ghost) {
+    // Check if system has been initialized
+    // If not, throw exception
+    if (!initialized_) {
+        std::string text = std::string("System has not been initialized. ") +
+                           std::string("Electrostatic Energy calculation ") + std::string("not possible.");
+        throw CUException(__func__, __FILE__, __LINE__, text);
+    }
+
+    energy_ = 0.0;
+    std::fill(grad_.begin(), grad_.end(), 0.0);
+    std::fill(virial_.begin(), virial_.end(), 0.0);
+
+    SetPBC(box_);
+    System::SetCustomCharges(mod_indices, mod_charges);
+    System::SetZeroPols(mod_indices);
+    energy_ = GetElectrostatics_QMMM(do_grads, use_ghost);
+    double perm_energy_ = electrostaticE_.GetPermanentElectrostaticEnergy();
+
+    std::vector<double> dipvec = electrostaticE_.GetInducedDipoles();
+    std::cout << " INDUCED DIPOLES " << std::endl;
+    for (size_t i=0; i< dipvec.size(); i++) {
+        std::cout << dipvec[i] << std::endl;
+    }
+    std::cout << " END INDUCED DIPOLES " << std::endl;
+    return perm_energy_;
+}
+
+
+double System::PermanentElectrostatics(bool do_grads, bool use_ghost) {
+    // Check if system has been initialized
+    // If not, throw exception
+    if (!initialized_) {
+        std::string text = std::string("System has not been initialized. ") +
+                           std::string("Electrostatic Energy calculation ") + std::string("not possible.");
+        throw CUException(__func__, __FILE__, __LINE__, text);
+    }
+
+    energy_ = 0.0;
+    std::fill(grad_.begin(), grad_.end(), 0.0);
+    std::fill(virial_.begin(), virial_.end(), 0.0);
+
+    SetPBC(box_);
+
+    energy_ = GetElectrostatics(do_grads, use_ghost);
+
+    return electrostaticE_.GetPermanentElectrostaticEnergy();
 }
 
 double System::ElectrostaticsMPI(bool do_grads, bool use_ghost) {
@@ -3041,6 +3558,14 @@ double System::GetElectrostatics(bool do_grads, bool use_ghost) {
     electrostaticE_.SetFFTDimension(grid_fftdim_elec_);
 
     return electrostaticE_.GetElectrostatics(grad_, &virial_, use_ghost);
+}
+
+double System::GetElectrostatics_QMMM(bool do_grads, bool use_ghost) {
+    electrostaticE_.SetNewParameters(xyz_, chg_, chggrad_, pol_, polfac_, dipole_method_, do_grads, box_, cutoff2b_);
+    electrostaticE_.SetDipoleTolerance(diptol_);
+    electrostaticE_.SetDipoleMaxIt(maxItDip_);
+
+    return electrostaticE_.GetElectrostatics_QMMM(grad_, &virial_, use_ghost);
 }
 
 double System::GetElectrostaticsMPIlocal(bool do_grads, bool use_ghost) {

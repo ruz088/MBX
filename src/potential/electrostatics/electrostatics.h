@@ -143,7 +143,7 @@ class Electrostatics {
      */
     double GetElectrostatics(std::vector<double> &grad, std::vector<double> *virial = 0, bool use_ghost = 0);
     double GetElectrostaticsMPIlocal(std::vector<double> &grad, std::vector<double> *virial = 0, bool use_ghost = 0);
-
+    double GetElectrostatics_QMMM(std::vector<double> &grad, std::vector<double> *virial = 0, bool use_ghost = 0);
     /**
      * @brief Clears the ASPC history
      *
@@ -409,13 +409,17 @@ class Electrostatics {
    private:
     void CalculatePermanentElecField(bool use_ghost = 0);
     void CalculatePermanentElecFieldMPIlocal(bool use_ghost = 0);
+    void CalculatePermanentElecField_QMMM(bool use_ghost = 0);
     void CalculateDipolesIterative();
     void ComputeDipoleField(std::vector<double> &in_v, std::vector<double> &out_v, bool use_ghost = 0);
     void ComputeDipoleFieldMPIlocal(std::vector<double> &in_v, std::vector<double> &out_v, bool use_ghost = 0);
+    void ComputeDipoleField_QMMM(std::vector<double> &in_v, std::vector<double> &out_v, bool use_ghost = 0);
     void CalculateDipolesCG();
     void CalculateDipolesCGMPIlocal(bool use_ghost = 0);
+    void CalculateDipolesCG_QMMM();
     void DipolesCGIteration(std::vector<double> &in_v, std::vector<double> &out_v);
     void DipolesCGIterationMPIlocal(std::vector<double> &in_v, std::vector<double> &out_v, bool use_ghost = 0);
+    void DipolesCGIteration_QMMM(std::vector<double> &in_v, std::vector<double> &out_v);
     void CalculateDipolesAspc();
     void SetAspcParameters(size_t k);
     void CalculateDipoles();
