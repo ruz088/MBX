@@ -199,6 +199,9 @@ size_t SetUpMonomers(std::vector<std::string> mon, std::vector<size_t> &sites, s
                        mon[i] == "k" || mon[i] == "rb" || mon[i] == "cs") {
                 sites.push_back(1);
                 nat.push_back(1);
+            } else if (mon[i] == "nma") {
+                sites.push_back(12);
+                nat.push_back(12);
                 // END SECTION SITES
             } else {
                 // If monomer not found, throw exception
@@ -701,6 +704,47 @@ void GetExcluded(std::string mon, nlohmann::json mon_j, excluded_set_type &exc12
         exc13.insert(std::make_pair(2, 3));
         // 14 distances
     }
+    if (mon == "nma") {
+        // 12 distances
+        exc12.insert(std::make_pair(0, 1));
+        exc12.insert(std::make_pair(6, 7));
+        exc12.insert(std::make_pair(6, 8));
+        exc12.insert(std::make_pair(8, 11));
+        exc12.insert(std::make_pair(8, 10));
+        exc12.insert(std::make_pair(8, 9));
+        exc12.insert(std::make_pair(0, 6));
+        exc12.insert(std::make_pair(2, 3));
+        exc12.insert(std::make_pair(2, 4));
+        exc12.insert(std::make_pair(2, 5));
+        exc12.insert(std::make_pair(0, 2));
+        // 13 distances
+        exc13.insert(std::make_pair(1, 2));
+        exc13.insert(std::make_pair(7, 8));
+        exc13.insert(std::make_pair(6, 9));
+        exc13.insert(std::make_pair(2, 6));
+        exc13.insert(std::make_pair(10, 11));
+        exc13.insert(std::make_pair(4, 5));
+        exc13.insert(std::make_pair(6, 11));
+        exc13.insert(std::make_pair(6, 10));
+        exc13.insert(std::make_pair(0, 7));
+        exc13.insert(std::make_pair(9, 10));
+        exc13.insert(std::make_pair(9, 11));
+        exc13.insert(std::make_pair(0, 5));
+        exc13.insert(std::make_pair(1, 6));
+        exc13.insert(std::make_pair(0, 4));
+        exc13.insert(std::make_pair(0, 3));
+        exc13.insert(std::make_pair(0, 8));
+        exc13.insert(std::make_pair(3, 4));
+        exc13.insert(std::make_pair(3, 5));
+        // 14 distances
+        exc14.insert(std::make_pair(1, 3));
+        exc14.insert(std::make_pair(5, 6));
+        exc14.insert(std::make_pair(2, 8));
+        exc14.insert(std::make_pair(0, 10));
+        exc14.insert(std::make_pair(7, 11));
+        exc14.insert(std::make_pair(1, 5));
+        exc14.insert(std::make_pair(0, 11));
+    }
 
     // =====>> END SECTION EXCLUDED <<=====
 }
@@ -873,6 +917,21 @@ void SetCharges(std::vector<double> xyz, std::vector<double> &charges, std::stri
         for (size_t nv = 0; nv < n_mon; nv++) {
             charges[fst_ind + nv] = 0.0;
         }
+    } else if (mon_id == "nma") {
+        for (size_t nv = 0; nv < n_mon; nv++) {
+            charges[fst_ind + nv*nsites + 0] = 0.2584 * CHARGECON;
+            charges[fst_ind + nv*nsites + 1] = -0.3582 * CHARGECON;
+            charges[fst_ind + nv*nsites + 2] = -0.241 * CHARGECON;
+            charges[fst_ind + nv*nsites + 3] = 0.1022 * CHARGECON;
+            charges[fst_ind + nv*nsites + 4] = 0.1022 * CHARGECON;
+            charges[fst_ind + nv*nsites + 5] = 0.1022 * CHARGECON;
+            charges[fst_ind + nv*nsites + 6] = -0.4628 * CHARGECON;
+            charges[fst_ind + nv*nsites + 7] = 0.318 * CHARGECON;
+            charges[fst_ind + nv*nsites + 8] = -0.1339 * CHARGECON;
+            charges[fst_ind + nv*nsites + 9] = 0.1049 * CHARGECON;
+            charges[fst_ind + nv*nsites + 10] = 0.1049 * CHARGECON;
+            charges[fst_ind + nv*nsites + 11] = 0.1049 * CHARGECON;
+        }
 
         // END SECTION CHARGES
 
@@ -1017,6 +1076,21 @@ void SetPolfac(std::vector<double> &polfac, std::string mon_id, size_t n_mon, si
         for (size_t nv = 0; nv < n_mon; nv++) {
             polfac[fst_ind + nv] = 0.20493754;
         }
+    } else if (mon_id == "nma") {
+        for (size_t nv = 0; nv < n_mon; nv++) {
+            polfac[fst_ind + nv*nsites + 0] = 1.3258;
+            polfac[fst_ind + nv*nsites + 1] = 0.7694;
+            polfac[fst_ind + nv*nsites + 2] = 1.1856;
+            polfac[fst_ind + nv*nsites + 3] = 0.3306;
+            polfac[fst_ind + nv*nsites + 4] = 0.3306;
+            polfac[fst_ind + nv*nsites + 5] = 0.3306;
+            polfac[fst_ind + nv*nsites + 6] = 0.8537;
+            polfac[fst_ind + nv*nsites + 7] = 0.3238;
+            polfac[fst_ind + nv*nsites + 8] = 1.185;
+            polfac[fst_ind + nv*nsites + 9] = 0.3339;
+            polfac[fst_ind + nv*nsites + 10] = 0.3339;
+            polfac[fst_ind + nv*nsites + 11] = 0.3339;
+        }
 
         // =====>> END SECTION POLFACS <<=====
 
@@ -1119,6 +1193,21 @@ void SetPol(std::vector<double> &pol, std::string mon_id, size_t n_mon, size_t n
     } else if (mon_id == "he") {
         for (size_t nv = 0; nv < n_mon; nv++) {
             pol[fst_ind + nv] = 0.20493754;
+        }
+    } else if (mon_id == "nma") {
+        for (size_t nv = 0; nv < n_mon; nv++) {
+            pol[fst_ind + nv*nsites + 0] = 1.3258;
+            pol[fst_ind + nv*nsites + 1] = 0.7694;
+            pol[fst_ind + nv*nsites + 2] = 1.1856;
+            pol[fst_ind + nv*nsites + 3] = 0.3306;
+            pol[fst_ind + nv*nsites + 4] = 0.3306;
+            pol[fst_ind + nv*nsites + 5] = 0.3306;
+            pol[fst_ind + nv*nsites + 6] = 0.8537;
+            pol[fst_ind + nv*nsites + 7] = 0.3238;
+            pol[fst_ind + nv*nsites + 8] = 1.185;
+            pol[fst_ind + nv*nsites + 9] = 0.3339;
+            pol[fst_ind + nv*nsites + 10] = 0.3339;
+            pol[fst_ind + nv*nsites + 11] = 0.3339;
         }
 
         // =====>> END SECTION POLS <<=====
@@ -1252,6 +1341,21 @@ void SetC6LongRange(std::vector<double> &c6_lr, std::string mon_id, size_t n_mon
     } else if (mon_id == "he") {
         for (size_t nv = 0; nv < n_mon; nv++) {
             c6_lr[fst_ind + nv] = 4.93437037524;
+        }
+    } else if (mon_id == "nma") {
+        for (size_t nv = 0; nv < n_mon; nv++) { 
+            c6_lr[nv * natoms + fst_ind] = 16.889612192113827; // A
+            c6_lr[nv * natoms + fst_ind] = 14.186627506211616; // B
+            c6_lr[nv * natoms + fst_ind] = 16.793067021839697; // C
+            c6_lr[nv * natoms + fst_ind] = 5.960637549792807; // D
+            c6_lr[nv * natoms + fst_ind] = 5.960637549792807; // D
+            c6_lr[nv * natoms + fst_ind] = 5.960637549792807; // D
+            c6_lr[nv * natoms + fst_ind] = 12.953397237790556; // E
+            c6_lr[nv * natoms + fst_ind] = 5.685613423369549; // F
+            c6_lr[nv * natoms + fst_ind] = 16.753223570405787; // G
+            c6_lr[nv * natoms + fst_ind] = 6.003757156980951; // H
+            c6_lr[nv * natoms + fst_ind] = 6.003757156980951; // H
+            c6_lr[nv * natoms + fst_ind] = 6.003757156980951; // H
         }
         // END SECTION C6_LONG_RANGE
         // Water is the only monomer which C6 does not come from qchem.

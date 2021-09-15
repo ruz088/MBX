@@ -739,6 +739,217 @@ bool GetC6(std::string mon_id1, std::string mon_id2, size_t index1, size_t index
         // Fill in (in order) the C6 and d6 coefficients
         C6.push_back(1857.467);  // kcal/mol * A^(-6)  A--B
         d6.push_back(3.19908);   // A^(-1) A--B
+    } else if (mon_id1 == "nma" and mon_id2 == "nma") {
+        types1.push_back(0);
+        types1.push_back(1);
+        types1.push_back(2);
+        types1.push_back(3);
+        types1.push_back(3);
+        types1.push_back(3);
+        types1.push_back(4);
+        types1.push_back(5);
+        types1.push_back(6);
+        types1.push_back(7);
+        types1.push_back(7);
+        types1.push_back(7);
+
+        types2.push_back(0);
+        types2.push_back(1);
+        types2.push_back(2);
+        types2.push_back(3);
+        types2.push_back(3);
+        types2.push_back(3);
+        types2.push_back(4);
+        types2.push_back(5);
+        types2.push_back(6);
+        types2.push_back(7);
+        types2.push_back(7);
+        types2.push_back(7);
+
+        nt2 = 8;
+
+        // Fill in (in order) the C6 and d6 coefficients
+        C6.push_back(285.259);  // kcal/mol * A^(-6)  A--A
+        C6.push_back(217.0515);  // kcal/mol * A^(-6)  A--B
+        C6.push_back(282.765);  // kcal/mol * A^(-6)  A--C
+        C6.push_back(96.8133);  // kcal/mol * A^(-6)  A--D
+        C6.push_back(213.7169);  // kcal/mol * A^(-6)  A--E
+        C6.push_back(93.1343);  // kcal/mol * A^(-6)  A--F
+        C6.push_back(282.1311);  // kcal/mol * A^(-6)  A--G
+        C6.push_back(97.4931);  // kcal/mol * A^(-6)  A--H
+        C6.push_back(217.0515);  // kcal/mol * A^(-6)  A--B
+        C6.push_back(201.2604);  // kcal/mol * A^(-6)  B--B
+        C6.push_back(222.4943);  // kcal/mol * A^(-6)  B--C
+        C6.push_back(83.3556);  // kcal/mol * A^(-6)  B--D
+        C6.push_back(178.8002);  // kcal/mol * A^(-6)  B--E
+        C6.push_back(79.0243);  // kcal/mol * A^(-6)  B--F
+        C6.push_back(221.8054);  // kcal/mol * A^(-6)  B--G
+        C6.push_back(83.9664);  // kcal/mol * A^(-6)  B--H
+        C6.push_back(282.765);  // kcal/mol * A^(-6)  A--C
+        C6.push_back(222.4943);  // kcal/mol * A^(-6)  B--C
+        C6.push_back(282.0071);  // kcal/mol * A^(-6)  C--C
+        C6.push_back(98.0627);  // kcal/mol * A^(-6)  C--D
+        C6.push_back(215.4393);  // kcal/mol * A^(-6)  C--E
+        C6.push_back(94.0988);  // kcal/mol * A^(-6)  C--F
+        C6.push_back(281.3319);  // kcal/mol * A^(-6)  C--G
+        C6.push_back(98.7608);  // kcal/mol * A^(-6)  C--H
+        C6.push_back(96.8133);  // kcal/mol * A^(-6)  A--D
+        C6.push_back(83.3556);  // kcal/mol * A^(-6)  B--D
+        C6.push_back(98.0627);  // kcal/mol * A^(-6)  C--D
+        C6.push_back(35.5292);  // kcal/mol * A^(-6)  D--D
+        C6.push_back(77.0538);  // kcal/mol * A^(-6)  D--E
+        C6.push_back(33.8787);  // kcal/mol * A^(-6)  D--F
+        C6.push_back(97.7871);  // kcal/mol * A^(-6)  D--G
+        C6.push_back(35.791);  // kcal/mol * A^(-6)  D--H
+        C6.push_back(213.7169);  // kcal/mol * A^(-6)  A--E
+        C6.push_back(178.8002);  // kcal/mol * A^(-6)  B--E
+        C6.push_back(215.4393);  // kcal/mol * A^(-6)  C--E
+        C6.push_back(77.0538);  // kcal/mol * A^(-6)  D--E
+        C6.push_back(167.7905);  // kcal/mol * A^(-6)  E--E
+        C6.push_back(73.609);  // kcal/mol * A^(-6)  E--F
+        C6.push_back(214.8606);  // kcal/mol * A^(-6)  E--G
+        C6.push_back(77.605);  // kcal/mol * A^(-6)  E--H
+        C6.push_back(93.1343);  // kcal/mol * A^(-6)  A--F
+        C6.push_back(79.0243);  // kcal/mol * A^(-6)  B--F
+        C6.push_back(94.0988);  // kcal/mol * A^(-6)  C--F
+        C6.push_back(33.8787);  // kcal/mol * A^(-6)  D--F
+        C6.push_back(73.609);  // kcal/mol * A^(-6)  E--F
+        C6.push_back(32.3262);  // kcal/mol * A^(-6)  F--F
+        C6.push_back(93.8508);  // kcal/mol * A^(-6)  F--G
+        C6.push_back(34.1129);  // kcal/mol * A^(-6)  F--H
+        C6.push_back(282.1311);  // kcal/mol * A^(-6)  A--G
+        C6.push_back(221.8054);  // kcal/mol * A^(-6)  B--G
+        C6.push_back(281.3319);  // kcal/mol * A^(-6)  C--G
+        C6.push_back(97.7871);  // kcal/mol * A^(-6)  D--G
+        C6.push_back(214.8606);  // kcal/mol * A^(-6)  E--G
+        C6.push_back(93.8508);  // kcal/mol * A^(-6)  F--G
+        C6.push_back(280.6705);  // kcal/mol * A^(-6)  G--G
+        C6.push_back(98.4829);  // kcal/mol * A^(-6)  G--H
+        C6.push_back(97.4931);  // kcal/mol * A^(-6)  A--H
+        C6.push_back(83.9664);  // kcal/mol * A^(-6)  B--H
+        C6.push_back(98.7608);  // kcal/mol * A^(-6)  C--H
+        C6.push_back(35.791);  // kcal/mol * A^(-6)  D--H
+        C6.push_back(77.605);  // kcal/mol * A^(-6)  E--H
+        C6.push_back(34.1129);  // kcal/mol * A^(-6)  F--H
+        C6.push_back(98.4829);  // kcal/mol * A^(-6)  G--H
+        C6.push_back(36.0451);  // kcal/mol * A^(-6)  H--H
+        d6.push_back(5.10251);  // A^(-1) A--A
+        d6.push_back(0.124088);  // A^(-1) A--B
+        d6.push_back(3.35382);  // A^(-1) A--C
+        d6.push_back(0.199081);  // A^(-1) A--D
+        d6.push_back(2.59766);  // A^(-1) A--E
+        d6.push_back(1.77292);  // A^(-1) A--F
+        d6.push_back(2.98567);  // A^(-1) A--G
+        d6.push_back(0.0895376);  // A^(-1) A--H
+        d6.push_back(0.124088);  // A^(-1) A--B
+        d6.push_back(3.44299);  // A^(-1) B--B
+        d6.push_back(2.58472);  // A^(-1) B--C
+        d6.push_back(4.35562);  // A^(-1) B--D
+        d6.push_back(3.82);  // A^(-1) B--E
+        d6.push_back(2.4897);  // A^(-1) B--F
+        d6.push_back(3.80478);  // A^(-1) B--G
+        d6.push_back(3.72512);  // A^(-1) B--H
+        d6.push_back(3.35382);  // A^(-1) A--C
+        d6.push_back(2.58472);  // A^(-1) B--C
+        d6.push_back(3.41495);  // A^(-1) C--C
+        d6.push_back(0.298141);  // A^(-1) C--D
+        d6.push_back(2.6994);  // A^(-1) C--E
+        d6.push_back(3.80065);  // A^(-1) C--F
+        d6.push_back(2.55108);  // A^(-1) C--G
+        d6.push_back(5.40438);  // A^(-1) C--H
+        d6.push_back(0.199081);  // A^(-1) A--D
+        d6.push_back(4.35562);  // A^(-1) B--D
+        d6.push_back(0.298141);  // A^(-1) C--D
+        d6.push_back(2.79273);  // A^(-1) D--D
+        d6.push_back(1.86683);  // A^(-1) D--E
+        d6.push_back(1.45553);  // A^(-1) D--F
+        d6.push_back(2.7634);  // A^(-1) D--G
+        d6.push_back(1.41784);  // A^(-1) D--H
+        d6.push_back(2.59766);  // A^(-1) A--E
+        d6.push_back(3.82);  // A^(-1) B--E
+        d6.push_back(2.6994);  // A^(-1) C--E
+        d6.push_back(1.86683);  // A^(-1) D--E
+        d6.push_back(0.0889704);  // A^(-1) E--E
+        d6.push_back(3.20248);  // A^(-1) E--F
+        d6.push_back(4.1739);  // A^(-1) E--G
+        d6.push_back(3.15108);  // A^(-1) E--H
+        d6.push_back(1.77292);  // A^(-1) A--F
+        d6.push_back(2.4897);  // A^(-1) B--F
+        d6.push_back(3.80065);  // A^(-1) C--F
+        d6.push_back(1.45553);  // A^(-1) D--F
+        d6.push_back(3.20248);  // A^(-1) E--F
+        d6.push_back(4.63545);  // A^(-1) F--F
+        d6.push_back(1.60478);  // A^(-1) F--G
+        d6.push_back(1.80232);  // A^(-1) F--H
+        d6.push_back(2.98567);  // A^(-1) A--G
+        d6.push_back(3.80478);  // A^(-1) B--G
+        d6.push_back(2.55108);  // A^(-1) C--G
+        d6.push_back(2.7634);  // A^(-1) D--G
+        d6.push_back(4.1739);  // A^(-1) E--G
+        d6.push_back(1.60478);  // A^(-1) F--G
+        d6.push_back(4.78365);  // A^(-1) G--G
+        d6.push_back(2.29189);  // A^(-1) G--H
+        d6.push_back(0.0895376);  // A^(-1) A--H
+        d6.push_back(3.72512);  // A^(-1) B--H
+        d6.push_back(5.40438);  // A^(-1) C--H
+        d6.push_back(1.41784);  // A^(-1) D--H
+        d6.push_back(3.15108);  // A^(-1) E--H
+        d6.push_back(1.80232);  // A^(-1) F--H
+        d6.push_back(2.29189);  // A^(-1) G--H
+        d6.push_back(3.64866);  // A^(-1) H--H
+    } else if (mon_id1 == "h2o" and mon_id2 == "nma") {
+        types1.push_back(0);
+        types1.push_back(1);
+        types1.push_back(1);
+
+        types2.push_back(0);
+        types2.push_back(1);
+        types2.push_back(2);
+        types2.push_back(3);
+        types2.push_back(3);
+        types2.push_back(3);
+        types2.push_back(4);
+        types2.push_back(5);
+        types2.push_back(6);
+        types2.push_back(7);
+        types2.push_back(7);
+        types2.push_back(7);
+
+        nt2 = 8;
+
+        // Fill in (in order) the C6 and d6 coefficients
+        C6.push_back(205.3667);  // kcal/mol * A^(-6)  A--I
+        C6.push_back(192.1523);  // kcal/mol * A^(-6)  B--I
+        C6.push_back(210.8095);  // kcal/mol * A^(-6)  C--I
+        C6.push_back(79.2861);  // kcal/mol * A^(-6)  D--I
+        C6.push_back(169.8574);  // kcal/mol * A^(-6)  E--I
+        C6.push_back(75.111);  // kcal/mol * A^(-6)  F--I
+        C6.push_back(210.1481);  // kcal/mol * A^(-6)  G--I
+        C6.push_back(79.874);  // kcal/mol * A^(-6)  H--I
+        C6.push_back(99.459);  // kcal/mol * A^(-6)  A--J
+        C6.push_back(85.032);  // kcal/mol * A^(-6)  B--J
+        C6.push_back(100.6164);  // kcal/mol * A^(-6)  C--J
+        C6.push_back(36.3406);  // kcal/mol * A^(-6)  D--J
+        C6.push_back(78.8865);  // kcal/mol * A^(-6)  E--J
+        C6.push_back(34.6549);  // kcal/mol * A^(-6)  F--J
+        C6.push_back(100.3408);  // kcal/mol * A^(-6)  G--J
+        C6.push_back(36.607);  // kcal/mol * A^(-6)  H--J
+        d6.push_back(3.58902);  // A^(-1) A--I
+        d6.push_back(3.56902);  // A^(-1) B--I
+        d6.push_back(3.22455);  // A^(-1) C--I
+        d6.push_back(3.42937);  // A^(-1) D--I
+        d6.push_back(4.01131);  // A^(-1) E--I
+        d6.push_back(3.76554);  // A^(-1) F--I
+        d6.push_back(3.44064);  // A^(-1) G--I
+        d6.push_back(3.33389);  // A^(-1) H--I
+        d6.push_back(3.24192);  // A^(-1) A--J
+        d6.push_back(3.73155);  // A^(-1) B--J
+        d6.push_back(3.4567);  // A^(-1) C--J
+        d6.push_back(3.73928);  // A^(-1) D--J
+        d6.push_back(3.04496);  // A^(-1) E--J
+        d6.push_back(3.47858);  // A^(-1) F--J
+        d6.push_back(4.18877);  // A^(-1) G--J
+        d6.push_back(3.33517);  // A^(-1) H--J
         // =====>> END SECTION DISPERSION <<=====
     } else {
         out_C6 = 0.0;
