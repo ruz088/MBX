@@ -6465,6 +6465,8 @@ double Electrostatics::GetElectrostatics(std::vector<double> &grad, std::vector<
     if (virial != 0) {
         for (size_t k = 0; k < 9; k++) {
             (*virial)[k] += virial_[k];
+            // print viral and test
+            std::cerr << (*virial)[k] << " , ";
         }
     }
     has_energy_ = true;
@@ -6493,6 +6495,8 @@ double Electrostatics::GetElectrostatics(std::vector<double> &grad, std::vector<
 
 #endif
 
+    std::cerr << "Eperm: " << Eperm_ << std::endl;
+    std::cerr << "Eind: " << Eind_ << std::endl;
     return Eperm_ + Eind_;
 }
 

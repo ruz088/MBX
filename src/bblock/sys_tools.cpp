@@ -744,6 +744,16 @@ void GetExcluded(std::string mon, nlohmann::json mon_j, excluded_set_type &exc12
         exc14.insert(std::make_pair(7, 11));
         exc14.insert(std::make_pair(1, 5));
         exc14.insert(std::make_pair(0, 11));
+        exc14.insert(std::make_pair(3, 6));
+        exc14.insert(std::make_pair(7, 10));
+        exc14.insert(std::make_pair(1, 4));
+        exc14.insert(std::make_pair(7, 9));
+        exc14.insert(std::make_pair(2, 7));
+        exc14.insert(std::make_pair(4, 6));
+        exc14.insert(std::make_pair(1, 8));
+        exc14.insert(std::make_pair(1, 7));
+        exc14.insert(std::make_pair(0, 9));
+
     }
 
     // =====>> END SECTION EXCLUDED <<=====
