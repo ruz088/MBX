@@ -529,6 +529,21 @@ void PairMBX::accumulate_f()
 	const int ii3 = atom->map(anchor + 3);
 	const int ii4 = atom->map(anchor + 4);
 	if( (ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0)) include_monomer = false;
+      } else if(strcmp("nma", mol_names[mtype]) == 0) {
+	na = 12;
+	const int ii1 = atom->map(anchor + 1);
+	const int ii2 = atom->map(anchor + 2);
+	const int ii3 = atom->map(anchor + 3);
+	const int ii4 = atom->map(anchor + 4);
+	const int ii5 = atom->map(anchor + 5);
+	const int ii6 = atom->map(anchor + 6);
+	const int ii7 = atom->map(anchor + 7);
+	const int ii8 = atom->map(anchor + 8);
+	const int ii9 = atom->map(anchor + 9);
+	const int ii10 = atom->map(anchor + 10);
+	const int ii11 = atom->map(anchor + 11);
+	const int ii12 = atom->map(anchor + 12);
+	if( (ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0) || (ii5 < 0) || (ii6 < 0) || (ii7 < 0) || (ii8 < 0) || (ii9 < 0) || (ii10 < 0) || (ii11 < 0) || (ii12 < 0)) include_monomer = false;
       }
 
       if(include_monomer) {
@@ -643,6 +658,22 @@ void PairMBX::accumulate_f_local()
 	const int ii3 = atom->map(anchor + 3);
 	const int ii4 = atom->map(anchor + 4);
 	if( (ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0)) include_monomer = false;
+      } 
+      else if(strcmp("nma", mol_names[mtype]) == 0) {
+	na = 12;
+	const int ii1 = atom->map(anchor + 1);
+	const int ii2 = atom->map(anchor + 2);
+	const int ii3 = atom->map(anchor + 3);
+	const int ii4 = atom->map(anchor + 4);
+	const int ii5 = atom->map(anchor + 5);
+	const int ii6 = atom->map(anchor + 6);
+	const int ii7 = atom->map(anchor + 7);
+	const int ii8 = atom->map(anchor + 8);
+	const int ii9 = atom->map(anchor + 9);
+	const int ii10 = atom->map(anchor + 10);
+	const int ii11 = atom->map(anchor + 11);
+	const int ii12 = atom->map(anchor + 12);
+	if( (ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0) || (ii5 < 0) || (ii6 < 0) || (ii7 < 0) || (ii8 < 0) || (ii9 < 0) || (ii10 < 0) || (ii11 < 0) || (ii12 < 0)) include_monomer = false;
       }
 
       if(include_monomer) {
@@ -742,6 +773,7 @@ void PairMBX::accumulate_f_full()
 	else if(strcmp("he",  mol_names[mtype]) == 0) na = 1;
 	else if(strcmp("ch4", mol_names[mtype]) == 0) na = 5;
 	else if(strcmp("co2", mol_names[mtype]) == 0) na = 3;
+	else if(strcmp("nma", mol_names[mtype]) == 0) na = 12;
 	
 	tagint anchor = tag_full[i];
 	

@@ -117,6 +117,8 @@ FixMBX::FixMBX(LAMMPS *lmp, int narg, char **arg) : Fix(lmp, narg, arg) {
             num_atoms_per_mol[i] = 5;
         else if (strcmp("he", mol_names[i]) == 0)
             num_atoms_per_mol[i] = 1;
+        else if (strcmp("nma", mol_names[i]) == 0)
+            num_atoms_per_mol[i] = 12;
         else
             error->all(FLERR, "Unsupported molecule type in MBX");
     }
@@ -686,6 +688,8 @@ void FixMBX::mbx_init() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 
@@ -735,6 +739,19 @@ void FixMBX::mbx_init() {
                 } else if (strcmp("ch4", mol_names[mtype]) == 0) {
                     names.push_back("C");
                     names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                } else if (strcmp("nma", mol_names[mtype]) == 0) {
+                    names.push_back("C");
+                    names.push_back("O");
+                    names.push_back("C");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("N");
+                    names.push_back("H");
+                    names.push_back("C");
                     names.push_back("H");
                     names.push_back("H");
                     names.push_back("H");
@@ -901,6 +918,8 @@ void FixMBX::mbx_init_local() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 
@@ -948,6 +967,19 @@ void FixMBX::mbx_init_local() {
                 } else if (strcmp("ch4", mol_names[mtype]) == 0) {
                     names.push_back("C");
                     names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                } else if (strcmp("nma", mol_names[mtype]) == 0) {
+                    names.push_back("C");
+                    names.push_back("O");
+                    names.push_back("C");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("N");
+                    names.push_back("H");
+                    names.push_back("C");
                     names.push_back("H");
                     names.push_back("H");
                     names.push_back("H");
@@ -1125,6 +1157,8 @@ void FixMBX::mbx_init_full() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 
@@ -1176,6 +1210,19 @@ void FixMBX::mbx_init_full() {
                 } else if (strcmp("ch4", mol_names[mtype]) == 0) {
                     names.push_back("C");
                     names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                } else if (strcmp("nma", mol_names[mtype]) == 0) {
+                    names.push_back("C");
+                    names.push_back("O");
+                    names.push_back("C");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("N");
+                    names.push_back("H");
+                    names.push_back("C");
                     names.push_back("H");
                     names.push_back("H");
                     names.push_back("H");
@@ -1303,6 +1350,8 @@ void FixMBX::mbx_update_xyz() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 
@@ -1423,6 +1472,8 @@ void FixMBX::mbx_update_xyz_local() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 
@@ -1549,6 +1600,8 @@ void FixMBX::mbx_update_xyz_full() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
 
             tagint anchor = tag_full[i];
 
