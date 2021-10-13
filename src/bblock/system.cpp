@@ -356,7 +356,7 @@ std::vector<int> System::GetFFTDimensionLennardJones(int box_id) { return lennar
 void System::CheckFFTDimension(std::vector<int> grid) {
     // grid points evenly distributed across ranks in each dimension
 
-    if (!mpi_initialized_) {
+    if (!mpi_initialized_ && grid.size()) {
         std::string text = std::string("MPI not initialized yet");
         throw CUException(__func__, __FILE__, __LINE__, text);
     }
