@@ -33,12 +33,12 @@
 #include "universe.h"
 
 #define _MAX_SIZE_MOL_NAME 10
-#define _MAX_ATOMS_PER_MONOMER 5
+#define _MAX_ATOMS_PER_MONOMER 12
 #define SMALL 1.0e-4
 
 #define _NEW_MONOMER_OPS
 
-//#define _DEBUG
+#define _DEBUG
 
 //#define _DEBUG_EFIELD
 
@@ -136,6 +136,8 @@ FixMBX::FixMBX(LAMMPS *lmp, int narg, char **arg) : Fix(lmp, narg, arg) {
             num_atoms_per_mol[i] = 5;
         else if (strcmp("he", mol_names[i]) == 0)
             num_atoms_per_mol[i] = 1;
+        else if (strcmp("nma", mol_names[i]) == 0)
+            num_atoms_per_mol[i] = 12;
         else
             error->all(FLERR, "Unsupported molecule type in MBX");
     }
@@ -687,6 +689,20 @@ void FixMBX::pre_exchange() {
                     const int ii3 = atom->map(anchor + 3);
                     const int ii4 = atom->map(anchor + 4);
                     if ((ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0)) include_monomer = false;
+                } else if (strcmp("nma", mol_names[mtype]) == 0) {
+                    na = 12;
+                    const int ii1 = atom->map(anchor + 1);
+                    const int ii2 = atom->map(anchor + 2);
+                    const int ii3 = atom->map(anchor + 3);
+                    const int ii4 = atom->map(anchor + 4);
+                    const int ii5 = atom->map(anchor + 5);
+                    const int ii6 = atom->map(anchor + 6);
+                    const int ii7 = atom->map(anchor + 7);
+                    const int ii8 = atom->map(anchor + 8);
+                    const int ii9 = atom->map(anchor + 9);
+                    const int ii10 = atom->map(anchor + 10);
+                    const int ii11 = atom->map(anchor + 11);
+                    if ((ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0) || (ii5 < 0) || (ii6 < 0) || (ii7 < 0) || (ii8 < 0) || (ii9 < 0) || (ii10 < 0) || (ii11 < 0)) include_monomer = false;
                 }
 #endif
 
@@ -795,6 +811,20 @@ void FixMBX::mbx_get_dipoles_local() {
                     const int ii3 = atom->map(anchor + 3);
                     const int ii4 = atom->map(anchor + 4);
                     if ((ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0)) include_monomer = false;
+                } else if (strcmp("nma", mol_names[mtype]) == 0) {
+                    na = 12;
+                    const int ii1 = atom->map(anchor + 1);
+                    const int ii2 = atom->map(anchor + 2);
+                    const int ii3 = atom->map(anchor + 3);
+                    const int ii4 = atom->map(anchor + 4);
+                    const int ii5 = atom->map(anchor + 5);
+                    const int ii6 = atom->map(anchor + 6);
+                    const int ii7 = atom->map(anchor + 7);
+                    const int ii8 = atom->map(anchor + 8);
+                    const int ii9 = atom->map(anchor + 9);
+                    const int ii10 = atom->map(anchor + 10);
+                    const int ii11 = atom->map(anchor + 11);
+                    if ((ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0) || (ii5 < 0) || (ii6 < 0) || (ii7 < 0) || (ii8 < 0) || (ii9 < 0) || (ii10 < 0) || (ii11 < 0)) include_monomer = false;
                 }
 #endif
 
@@ -880,7 +910,21 @@ void FixMBX::mbx_get_dipoles_local() {
 	  const int ii3 = atom->map(anchor + 3);
 	  const int ii4 = atom->map(anchor + 4);
 	  if ((ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0)) include_monomer = false;
-	}
+        } else if (strcmp("nma", mol_names[mtype]) == 0) {
+            na = 12;
+            const int ii1 = atom->map(anchor + 1);
+            const int ii2 = atom->map(anchor + 2);
+            const int ii3 = atom->map(anchor + 3);
+            const int ii4 = atom->map(anchor + 4);
+            const int ii5 = atom->map(anchor + 5);
+            const int ii6 = atom->map(anchor + 6);
+            const int ii7 = atom->map(anchor + 7);
+            const int ii8 = atom->map(anchor + 8);
+            const int ii9 = atom->map(anchor + 9);
+            const int ii10 = atom->map(anchor + 10);
+            const int ii11 = atom->map(anchor + 11);
+            if ((ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0) || (ii5 < 0) || (ii6 < 0) || (ii7 < 0) || (ii8 < 0) || (ii9 < 0) || (ii10 < 0) || (ii11 < 0)) include_monomer = false;
+        }
 #endif
 	
 	// add info
@@ -1142,6 +1186,8 @@ void FixMBX::mbx_init() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 #endif
@@ -1221,6 +1267,19 @@ void FixMBX::mbx_init() {
                 } else if (strcmp("ch4", mol_names[mtype]) == 0) {
                     names.push_back("C");
                     names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                } else if (strcmp("nma", mol_names[mtype]) == 0) {
+                    names.push_back("C");
+                    names.push_back("O");
+                    names.push_back("C");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("N");
+                    names.push_back("H");
+                    names.push_back("C");
                     names.push_back("H");
                     names.push_back("H");
                     names.push_back("H");
@@ -1418,6 +1477,8 @@ void FixMBX::mbx_init_local() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 #endif
@@ -1496,6 +1557,19 @@ void FixMBX::mbx_init_local() {
                 } else if (strcmp("ch4", mol_names[mtype]) == 0) {
                     names.push_back("C");
                     names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                } else if (strcmp("nma", mol_names[mtype]) == 0) {
+                    names.push_back("C");
+                    names.push_back("O");
+                    names.push_back("C");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("N");
+                    names.push_back("H");
+                    names.push_back("C");
                     names.push_back("H");
                     names.push_back("H");
                     names.push_back("H");
@@ -1708,6 +1782,8 @@ void FixMBX::mbx_init_full() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 #endif
@@ -1791,6 +1867,19 @@ void FixMBX::mbx_init_full() {
                 } else if (strcmp("ch4", mol_names[mtype]) == 0) {
                     names.push_back("C");
                     names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                } else if (strcmp("nma", mol_names[mtype]) == 0) {
+                    names.push_back("C");
+                    names.push_back("O");
+                    names.push_back("C");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("H");
+                    names.push_back("N");
+                    names.push_back("H");
+                    names.push_back("C");
                     names.push_back("H");
                     names.push_back("H");
                     names.push_back("H");
@@ -1942,6 +2031,8 @@ void FixMBX::mbx_update_xyz() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 #endif
@@ -2099,6 +2190,8 @@ void FixMBX::mbx_update_xyz_local() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
             else
                 error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 #endif
@@ -2261,6 +2354,8 @@ void FixMBX::mbx_update_xyz_full() {
                 na = 3;
             else if (strcmp("ch4", mol_names[mtype]) == 0)
                 na = 5;
+            else if (strcmp("nma", mol_names[mtype]) == 0)
+                na = 12;
 #endif
 
             // test if external charged particle
@@ -2384,6 +2479,8 @@ void FixMBX::mbx_init_dipole_history_local() {
                     na = 3;
                 else if (strcmp("ch4", mol_names[mtype]) == 0)
                     na = 5;
+                else if (strcmp("nma", mol_names[mtype]) == 0)
+                    na = 12;
                 else
                     error->one(FLERR, "Unsupported molecule type in MBX");  // should never get this far...
 #endif
@@ -2577,6 +2674,8 @@ int FixMBX::get_num_atoms_per_monomer(char *name) {
         na = 5;
     else if (strcmp("he", name) == 0)
         na = 1;
+    else if (strcmp("nma", name) == 0)
+        na = 12;
     else
         error->one(FLERR, "Unsupported molecule type in MBX");
 
@@ -2619,6 +2718,20 @@ int FixMBX::get_include_monomer(char *name, int anchor, bool &inc) {
         const int ii3 = atom->map(anchor + 3);
         const int ii4 = atom->map(anchor + 4);
         if ((ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0)) inc = false;
+    } else if (strcmp("nma", name) == 0) {
+        na = 12;
+        const int ii1 = atom->map(anchor + 1);
+        const int ii2 = atom->map(anchor + 2);
+        const int ii3 = atom->map(anchor + 3);
+        const int ii4 = atom->map(anchor + 4);
+        const int ii5 = atom->map(anchor + 5);
+        const int ii6 = atom->map(anchor + 6);
+        const int ii7 = atom->map(anchor + 7);
+        const int ii8 = atom->map(anchor + 8);
+        const int ii9 = atom->map(anchor + 9);
+        const int ii10 = atom->map(anchor + 10);
+        const int ii11 = atom->map(anchor + 11);
+        if ((ii1 < 0) || (ii2 < 0) || (ii3 < 0) || (ii4 < 0) || (ii5 < 0) || (ii6 < 0) || (ii7 < 0) || (ii8 < 0) || (ii9 < 0) || (ii10 < 0) || (ii11 < 0)) inc = false;
     }
 
     return na;
@@ -2656,6 +2769,18 @@ void FixMBX::add_monomer_atom_types(char *name, std::vector<std::string> &n) {
         n.push_back("C");
         n.push_back("H");
         n.push_back("H");
+        n.push_back("H");
+        n.push_back("H");
+    } else if (strcmp("nma", name) == 0) {
+        n.push_back("C");
+        n.push_back("O");
+        n.push_back("C");
+        n.push_back("H");
+        n.push_back("H");
+        n.push_back("H");
+        n.push_back("N");
+        n.push_back("H");
+        n.push_back("C");
         n.push_back("H");
         n.push_back("H");
     }
