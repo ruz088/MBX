@@ -68,6 +68,7 @@ double get_1b_energy(std::string mon1, size_t nm, std::vector<double> xyz1, std:
         energies = pot.eval(xyz1.data(), nm);
     } else if (mon1 == "h2") {
         mbnrg_A2_deg8::mbnrg_A2_deg8_v1 pot(mon1);
+        energies = pot.eval(xyz1.data(), nm);
     } else if (mon1 == "n2o5") {
         x1b_A1B2C4_deg5::x1b_A1B2C4_v1x pot(mon1);
         energies = pot.eval(xyz1.data(), nm);
@@ -92,6 +93,11 @@ double get_1b_energy(std::string mon1, size_t nm, std::vector<double> xyz1, std:
     std::cerr << "Output bad indexes for " << mon1 << ":\n";
     for (size_t i = 0; i < bad_idxs.size(); i++) {
         std::cerr << bad_idxs[i] << " , ";
+    }
+    std::cerr << std::endl;
+    std::cerr << "Individual energies:\n";
+    for (size_t i = 0; i < energies.size(); i++) {
+        std::cerr << energies[i] << " , ";
     }
     std::cerr << std::endl;
     std::cerr << "Output energy: " << e << std::endl;
@@ -147,7 +153,7 @@ double get_1b_energy(std::string mon1, size_t nm, std::vector<double> xyz1, std:
         energies = pot.eval(xyz1.data(), grad1.data(), nm, virial);
     } else if (mon1 == "n2o5") {
         x1b_A1B2C4_deg5::x1b_A1B2C4_v1x pot(mon1);
-        energies = pot.eval(xyz1.data(), grad1.data(), nm);
+        energies = pot.eval(xyz1.data(), grad1.data(), nm, virial);
     } else if (mon1 == "nma") {
         mbnrg_A1B1C1D3E1F1G1H3_deg2::mbnrg_A1B1C1D3E1F1G1H3_deg2_v1 pot(mon1);
         energies =  pot.eval(xyz1.data(), grad1.data(), nm, virial);
@@ -179,6 +185,11 @@ double get_1b_energy(std::string mon1, size_t nm, std::vector<double> xyz1, std:
     std::cerr << "Output virial:" << std::endl;
     for (size_t i = 0; i < (*virial).size(); i++) {
         std::cerr << (*virial)[i] << " , ";
+    }
+    std::cerr << std::endl;
+    std::cerr << "Individual energies:\n";
+    for (size_t i = 0; i < energies.size(); i++) {
+        std::cerr << energies[i] << " , ";
     }
     std::cerr << std::endl;
     std::cerr << "Output energy: " << e << std::endl;

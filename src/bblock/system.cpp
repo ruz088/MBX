@@ -113,6 +113,13 @@ System::System() {
     mbx_j_ = {};
     monomers_j_ = {};
     repdisp_j_ = {};
+
+    // Defaults for when MBX built w/o MPI
+    world_ = 0;
+    mpi_rank_ = 0;
+    proc_grid_x_ = 1;
+    proc_grid_y_ = 1;
+    proc_grid_z_ = 1;
 }
 System::~System() {}
 
@@ -354,12 +361,16 @@ std::vector<int> System::GetFFTDimensionDispersion(int box_id) { return dispersi
 std::vector<int> System::GetFFTDimensionLennardJones(int box_id) { return lennardJonesE_.GetFFTDimension(box_id); }
 
 void System::CheckFFTDimension(std::vector<int> grid) {
-    // grid points evenly distributed across ranks in each dimension
+    if (grid.size() == 0) return;
 
-    if (!mpi_initialized_ && grid.size()) {
+#if HAVE_MPI == 1
+    if (!mpi_initialized_) {
         std::string text = std::string("MPI not initialized yet");
         throw CUException(__func__, __FILE__, __LINE__, text);
     }
+#endif
+
+    // grid points evenly distributed across ranks in each dimension
 
     if (grid.size() == 3) {
         size_t err = 0;
@@ -1578,7 +1589,8 @@ void System::AddMonomerInfo() {
 
     // Adding the number of sites of each monomer and storing the first index
     std::vector<size_t> fi_at;
-    numsites_ = systools::SetUpMonomers(monomers_, sites_, nat_, fi_at, monomers_j_);
+    std::vector<size_t> fi_sites;
+    numsites_ = systools::SetUpMonomers(monomers_, sites_, nat_, fi_at, fi_sites, monomers_j_);
 
 #ifdef DEBUG
     std::cerr << "Finished SetUpMonomers.\n";
@@ -1674,6 +1686,7 @@ void System::AddMonomerInfo() {
     atom_tag_ = std::vector<int>(numsites_, 0);
 
     size_t count = 0;
+    size_t count_real = 0;
     first_index_.clear();
     std::vector<size_t> tmpsites;
     std::vector<size_t> tmpnats;
@@ -1692,8 +1705,11 @@ void System::AddMonomerInfo() {
         for (size_t j = 0; j < (sites_[k] - nat_[k]); ++j) atom_tag_[count + nat_[k] + j] = -atom_tag[fi_at[k] + j];
         // Adding the first index of sites
         first_index_.push_back(count);
+        // Adding the first index of real sites
+        first_index_real_sites_.push_back(count);
         // Update count
         count += sites_[k];
+        count_real += nat_[k];
         // Updating the sites and nat vectors
         tmpsites.push_back(sites_[k]);
         tmpnats.push_back(nat_[k]);
@@ -3050,12 +3066,6 @@ void System::SetMPI(MPI_Comm comm, int nx, int ny, int nz) {
     proc_grid_x_ = nx;
     proc_grid_y_ = ny;
     proc_grid_z_ = nz;
-#else
-    world_ = 0;
-    mpi_rank_ = 0;
-    proc_grid_x_ = 1;
-    proc_grid_y_ = 1;
-    proc_grid_z_ = 1;
 #endif
 }
 
