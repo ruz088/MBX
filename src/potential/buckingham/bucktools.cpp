@@ -866,32 +866,32 @@ bool GetBuckParams(std::string mon_id1, std::string mon_id2, size_t index1, size
         nt2 = 8;
 
         // Fill in (in order) the C6 and d6 coefficients
-        a.push_back(8774.83);  // kcal/mol A--I
-        a.push_back(31956.7);  // kcal/mol B--I
-        a.push_back(24685.2);  // kcal/mol C--I
-        a.push_back(3163.57);  // kcal/mol D--I
-        a.push_back(77349.5);  // kcal/mol E--I
-        a.push_back(4373.29);  // kcal/mol F--I
-        a.push_back(30685.2);  // kcal/mol G--I
-        a.push_back(2965.05);  // kcal/mol H--I
-        a.push_back(2923.5);  // kcal/mol A--J
-        a.push_back(2860.21);  // kcal/mol B--J
-        a.push_back(2472.18);  // kcal/mol C--J
-        a.push_back(866.045);  // kcal/mol D--J
-        a.push_back(1748.53);  // kcal/mol E--J
-        a.push_back(511.812);  // kcal/mol F--J
-        a.push_back(7271.79);  // kcal/mol G--J
-        a.push_back(582.436);  // kcal/mol H--J
-        b.push_back(3.58902);  // A^(-1) A--I
-        b.push_back(3.56902);  // A^(-1) B--I
+        a.push_back(16817.3);  // kcal/mol A--I
+        a.push_back(50566.5);  // kcal/mol B--I
+        a.push_back(24946.2);  // kcal/mol C--I
+        a.push_back(2949.63);  // kcal/mol D--I
+        a.push_back(84432.3);  // kcal/mol E--I
+        a.push_back(3555.07);  // kcal/mol F--I
+        a.push_back(30748.5);  // kcal/mol G--I
+        a.push_back(3042.02);  // kcal/mol H--I
+        a.push_back(8519.91);  // kcal/mol A--J
+        a.push_back(4740.34);  // kcal/mol B--J
+        a.push_back(2526.05);  // kcal/mol C--J
+        a.push_back(1068.36);  // kcal/mol D--J
+        a.push_back(1754.12);  // kcal/mol E--J
+        a.push_back(625.414);  // kcal/mol F--J
+        a.push_back(9573.94);  // kcal/mol G--J
+        a.push_back(603.102);  // kcal/mol H--J
+        b.push_back(3.93094);  // A^(-1) A--I
+        b.push_back(3.77489);  // A^(-1) B--I
         b.push_back(3.22455);  // A^(-1) C--I
         b.push_back(3.42937);  // A^(-1) D--I
         b.push_back(4.01131);  // A^(-1) E--I
         b.push_back(3.76554);  // A^(-1) F--I
         b.push_back(3.44064);  // A^(-1) G--I
         b.push_back(3.33389);  // A^(-1) H--I
-        b.push_back(3.24192);  // A^(-1) A--J
-        b.push_back(3.73155);  // A^(-1) B--J
+        b.push_back(3.90853);  // A^(-1) A--J
+        b.push_back(4.26899);  // A^(-1) B--J
         b.push_back(3.4567);  // A^(-1) C--J
         b.push_back(3.73928);  // A^(-1) D--J
         b.push_back(3.04496);  // A^(-1) E--J

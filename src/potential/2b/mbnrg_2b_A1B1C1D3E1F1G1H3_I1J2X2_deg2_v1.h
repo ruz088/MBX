@@ -164,6 +164,10 @@ urns a vector with them.
     double m_k_x_inter_H_X_0;
     double m_k_x_intra_I_J_1;
     double m_k_x_intra_J_J_1;
+    double m_A;
+    double m_B;
+    double m_C;
+    double m_D;
 
     // Inner cutoff
     double m_ri = 7.0;

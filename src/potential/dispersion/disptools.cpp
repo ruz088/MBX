@@ -1145,22 +1145,22 @@ bool GetC6(std::string mon_id1, std::string mon_id2, size_t index1, size_t index
         C6.push_back(34.6549);  // kcal/mol * A^(-6)  F--J
         C6.push_back(100.3408);  // kcal/mol * A^(-6)  G--J
         C6.push_back(36.607);  // kcal/mol * A^(-6)  H--J
-        d6.push_back(3.58902);  // A^(-1) A--I
-        d6.push_back(3.56902);  // A^(-1) B--I
-        d6.push_back(3.22455);  // A^(-1) C--I
-        d6.push_back(3.42937);  // A^(-1) D--I
-        d6.push_back(4.01131);  // A^(-1) E--I
-        d6.push_back(3.76554);  // A^(-1) F--I
-        d6.push_back(3.44064);  // A^(-1) G--I
-        d6.push_back(3.33389);  // A^(-1) H--I
-        d6.push_back(3.24192);  // A^(-1) A--J
-        d6.push_back(3.73155);  // A^(-1) B--J
-        d6.push_back(3.4567);  // A^(-1) C--J
-        d6.push_back(3.73928);  // A^(-1) D--J
-        d6.push_back(3.04496);  // A^(-1) E--J
-        d6.push_back(3.47858);  // A^(-1) F--J
-        d6.push_back(4.18877);  // A^(-1) G--J
-        d6.push_back(3.33517);  // A^(-1) H--J
+        d6.push_back(3.93094);  // A^(-1) A--I
+        d6.push_back(3.77489);  // A^(-1) B--I
+        d6.push_back(3.27305);  // A^(-1) C--I
+        d6.push_back(3.91331);  // A^(-1) D--I
+        d6.push_back(4.06027);  // A^(-1) E--I
+        d6.push_back(4.07768);  // A^(-1) F--I
+        d6.push_back(2.99619);  // A^(-1) G--I
+        d6.push_back(3.74982);  // A^(-1) H--I
+        d6.push_back(3.90853);  // A^(-1) A--J
+        d6.push_back(4.26899);  // A^(-1) B--J
+        d6.push_back(3.27063);  // A^(-1) C--J
+        d6.push_back(4.5696);  // A^(-1) D--J
+        d6.push_back(3.66502);  // A^(-1) E--J
+        d6.push_back(3.885);  // A^(-1) F--J
+        d6.push_back(6.57386);  // A^(-1) G--J
+        d6.push_back(3.72043);  // A^(-1) H--J
         // =====>> END SECTION DISPERSION <<=====
     } else {
         out_C6 = 0.0;
